@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Only For You, My Love</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #4a282b;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding: 15px;
+        }
+
+        /* Ambient Floating Hearts Background Animation */
+        body::before {
+            content: "💖";
+            position: absolute;
+            font-size: 2rem;
+            animation: floatUp 6s infinite ease-in-out;
+            opacity: 0.15;
+            left: 10%;
+            pointer-events: none;
+        }
+        body::after {
+            content: "💗";
+            position: absolute;
+            font-size: 1.5rem;
+            animation: floatUp 8s infinite ease-in-out;
+            opacity: 0.15;
+            right: 15%;
+            animation-delay: 2s;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.2; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Main Container Optimized for Mobile App feel */
+        .container {
+            display: flex;
+            flex-direction: column; /* Stacked vertically for mobile */
+            width: 100%;
+            max-width: 430px; /* Standard Pro Max width */
+            min-height: 85vh;
+            max-height: 92vh;
+            background-color: #5c3337;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            border: 1px solid rgba(255, 214, 214, 0.1);
+            transition: all 0.5s ease-in-out;
+        }
+
+        /* Desktop expansion rules if opened on web browser */
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+                max-width: 950px;
+                height: 580px;
+                max-height: none;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* LEFT PANEL - Text & Mascot Styling */
+        .left-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px 20px 20px;
+            text-align: center;
+            position: relative;
+            background-image: linear-gradient(135deg, rgba(141, 74, 81, 0.5), rgba(74, 40, 43, 0.8)), url('heart-tunnel.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .cursive-text {
+            font-family: 'Caveat', cursive;
+            font-size: 2.5rem;
+            color: #ffb3b9;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            line-height: 1.2;
+        }
+
+        .subtext {
+            font-size: 0.95rem;
+            color: #dfb1b5;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .mascot-container {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            margin: 10px 0;
+            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.25));
+            animation: pulse 2s infinite ease-in-out;
+            display: block;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        #try-again-btn {
+            background-color: #e2727a;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+            margin-top: 5px;
+        }
+
+        #try-again-btn:hover {
+            background-color: #ff8890;
+            transform: translateY(-2px);
+        }
+
+        /* RIGHT PANEL - Keypad Styling */
+        .right-panel {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: rgba(40, 20, 22, 0.4);
+        }
+
+        .display-screen {
+            width: 85%;
+            height: 50px;
+            background-color: #ffd6d9;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.6rem;
+            color: #4a282b;
+            font-weight: 600;
+            letter-spacing: 6px;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .keypad-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .heart-button {
+            width: 55px;
+            height: 50px;
+            background-color: #ffccd0;
+            color: #5c3337;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 4px;
+            transition: all 0.15s ease;
+            clip-path: polygon(50% 15%, 65% 0%, 85% 0%, 100% 20%, 100% 40%, 50% 95%, 0% 40%, 0% 20%, 15% 0%, 35% 0%);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .heart-button:hover, .heart-button:active {
+            background-color: #ff8890;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .utility-btn {
+            background-color: #d19499;
+            color: #ffffff;
+            font-size: 1rem;
+        }
+
+        /* SUCCESS SCREEN & DASHBOARD MAIN PANEL */
+        .success-panel {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 25px 15px;
+            text-align: center;
+            overflow-y: auto;
+        }
+
+        .options-menu {
+            display: flex;
+            flex-direction: column; /* Vertical stack for phone screens */
+            gap: 15px;
+            margin-top: 25px;
+            width: 100%;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .options-menu {
+                flex-direction: row;
+                justify-content: center;
+                gap: 25px;
+            }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 15px;
+            width: 85%;
+            max-width: 260px;
+            display: flex;
+            flex-direction: row; /* Sideways layout fits better on vertical mobile screens */
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        @media (min-width: 768px) {
+            .card {
+                flex-direction: column;
+                padding: 25px 15px;
+                width: 200px;
+            }
+        }
+
+        .card:hover, .card:active {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #ffccd0;
+            box-shadow: 0 15px 30px rgba(255, 136, 144, 0.2);
+        }
+
+        .card-emoji {
+            font-size: 2.2rem;
+        }
+
+        .card-title {
+            color: #ffccd0;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        @media (min-width: 768px) {
+            .card-title { text-align: center; }
+        }
+
+        /* INNER PAGES LAYER STYLING */
+        .content-view {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: relative;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.5rem;
+            color: #ffb3b9;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.2s;
+            z-index: 10;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .back-arrow:hover {
+            transform: scale(1.2);
+            color: #ff8890;
+        }
+
+        /* Letter Wrapper - Scroll inside layout handles text overflowing nicely */
+        .letter-container-layout {
+            display: flex;
+            flex-direction: column; /* Content stacked for smartphone */
+            width: 100%;
+            flex: 1;
+            margin-top: 15px;
+            gap: 15px;
+            align-items: center;
+            position: relative;
+            background-color: #f5e6d3; 
+            padding: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .letter-container-layout {
+                flex-direction: row;
+                padding: 30px 40px;
+                justify-content: space-between;
+            }
+        }
+
+        .letter-box {
+            width: 100%;
+            height: 65%; /* Adjusted to make room for flower bouquet below text on mobile screens */
+            color: #382325; 
+            overflow-y: auto;
+            text-align: left;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            padding-right: 5px;
+        }
+
+        @media (min-width: 768px) {
+            .letter-box {
+                height: 100%;
+            }
+        }
+
+        /* Custom scrollbar */
+        .letter-box::-webkit-scrollbar {
+            width: 4px;
+        }
+        .letter-box::-webkit-scrollbar-thumb {
+            background: rgba(56, 35, 37, 0.2);
+            border-radius: 10px;
+        }
+
+        /* Inalis ang display: none para lumabas ang bulaklak sa mobile/browser windows */
+        .flower-sidebar {
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+            width: 100%;
+            max-height: 110px;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .flower-sidebar {
+                flex: 0.9;
+                height: 100%;
+                max-height: none;
+            }
+        }
+
+        .flower-sidebar img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 16px rgba(56, 35, 37, 0.25));
+        }
+
+        /* MUSIC VIEW COMPONENTS */
+        .music-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+            gap: 15px;
+            width: 100%;
+            flex: 1;
+        }
+
+        .vinyl-record {
+            width: 100%;
+            max-width: 290px;         
+            height: 180px;        
+            border-radius: 14px;  
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000000; 
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .vinyl-center {
+            width: 100%;          
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cover-art {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;  
+        }
+
+        .audio-player {
+            margin-top: 5px;
+            width: 100%;
+            max-width: 280px;
+            filter: sepia(0.2) hue-rotate(320deg) saturate(1.5);
+        }
+
+        /* GALLERY VIEW COMPONENTS */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns across phones */
+            gap: 12px;
+            width: 100%;
+            flex: 1;
+            overflow-y: auto;
+            margin-top: 15px;
+            padding: 5px;
+        }
+
+        @media (min-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+        }
+
+        .gallery-item {
+            background: white;
+            padding: 6px;
+            padding-bottom: 8px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            transform: rotate(-1.5deg);
+            transition: all 0.3s;
+            border-radius: 2px;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-item:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .gallery-item:hover, .gallery-item:active {
+            transform: rotate(0deg) scale(1.04);
+            z-index: 10;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.4);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+
+        @media (min-width: 768px) {
+            .gallery-item img { height: 130px; }
+        }
+
+        .photo-caption {
+            font-family: 'Caveat', cursive;
+            font-size: 1.1rem;
+            color: #382325;
+            margin-top: 6px;
+            text-align: center;
+            line-height: 1;
+            word-break: break-word;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="lock-screen" class="container">
+        <div class="left-panel">
+            <h1 id="main-message" class="cursive-text">Only for you, My love!</h1>
+            <p id="sub-message" class="subtext">Enter our anniversary date</p>
+            
+            <img id="mascot" class="mascot-container" src="https://media.giphy.com/media/HSCZMUa1ao17h7l5mg/giphy.gif" alt="Mascot GIF">
+            
+            <img id="wrong-mascot" class="mascot-container hidden" src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzR3NWYyMWRrYWduaTE0OTRmYTZvOXlzcHJ5d3B4bnM1Mmw5bm90ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/7OK8OHsQAA2l0x6mKP/giphy.gif" alt="Wrong Password Mascot GIF">
+            
+            <div>
+                <button id="try-again-btn" class="hidden" onclick="resetApp()">Try Again</button>
+            </div>
+        </div>
+        <div class="right-panel">
+            <div id="screen-display" class="display-screen"></div>
+            <div class="keypad-grid">
+                <button class="heart-button" onclick="appendNumber(1)">1</button>
+                <button class="heart-button" onclick="appendNumber(2)">2</button>
+                <button class="heart-button" onclick="appendNumber(3)">3</button>
+                <button class="heart-button" onclick="appendNumber(4)">4</button>
+                <button class="heart-button" onclick="appendNumber(5)">5</button>
+                <button class="heart-button" onclick="appendNumber(6)">6</button>
+                <button class="heart-button" onclick="appendNumber(7)">7</button>
+                <button class="heart-button" onclick="appendNumber(8)">8</button>
+                <button class="heart-button" onclick="appendNumber(9)">9</button>
+                <button class="heart-button utility-btn" onclick="clearScreen()">✕</button>
+                <button class="heart-button" onclick="appendNumber(0)">0</button>
+                <button class="heart-button utility-btn" onclick="validatePassword()">✓</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="success-screen" class="container hidden">
+        
+        <div id="dashboard-hub" class="success-panel">
+            <h1 class="cursive-text" style="font-size: 2.8rem; margin-top: 10px;">Happy Anniversary, My love!</h1>
+            <p class="subtext" style="font-size: 1rem; margin-bottom: 5px;">Choose one to begin your surprise</p>
+            
+            <div class="options-menu">
+                <div class="card" onclick="openSurprise('letter-view')">
+                    <div class="card-emoji">✉️💐</div>
+                    <div class="card-title">Love Letter</div>
+                </div>
+                <div class="card" onclick="openSurprise('song-view')">
+                    <div class="card-emoji">🎵💖</div>
+                    <div class="card-title">A song for you</div>
+                </div>
+                <div class="card" onclick="openSurprise('gallery-view')">
+                    <div class="card-emoji">📸✨</div>
+                    <div class="card-title">Couple Photo Bucket List</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="letter-view" class="content-view hidden">
+            <span class="back-arrow" onclick="closeSurprise()">◀</span>
+            <h1 class="cursive-text" style="font-size: 2.8rem;">My Letter To You</h1>
+            
+            <div class="letter-container-layout">
+                <div class="letter-box">
+                    <p>To my favorite person,</p><br>
+                    <p>First and foremost, happy 1st anniversary, baby. Cheers to our 365 days together. Us not being together right now to celebrate won't stop me from doing everything I can to remind you how loved and appreciated you are every single day. Distance may keep us apart for a moment, but it will never lessen how much you mean to me. I will continue to do so much more for you each day and stay consistent, because that`s what you`ve always deserved. </p><br>
+                    <p>I want you to know that you're the first girl I've ever told my mom about. I`ve always believed that introducing your significant other to your parents is something sacred and deeply special, so please know that I didn`t do it on a whim. You are my first love, and my last. I`ve thought this through carefully, and in my heart, I truly want it to be you. </p><br>
+                    <p>Thank you for staying with me through every moment this past year. Loving you has been and will always be one of the best things that has ever happened to me. Every day with you feels like another blessing I never want to take for granted. You`ve brought so much happiness, comfort, and meaning into my life in ways I never thought was possible. I always find myself lost in thought because of you. I often find myself lost in thought because of you—thinking about you, us, and feeling grateful that you`re part of my life.</p><br>
+                    <p>I hope you never hesitate to ask for my help or lean on me whenever you need to, because I will always be at your beck and call. No matter how busy life gets, please remember to rest, eat properly, and take care of yourself, baby. I care about your well-being and want you to stay safe and okay.</p><br>
+                    <p>I know we still have a long journey ahead of us, but if there`s one thing I`m certain about, it`s that I want to keep choosing you every single day. I want us to continue growing together. Whatever life throws at us, I`m willing to face it as long as I can hold your hand at the end. For me, that`s worth more than anything.</p><br>
+                    <p>Happy anniversary again, my love. Thank you for making this past year so beautiful and unforgettable. I love you more than words could ever fully explain, and I can`t wait for all the anniversaries we`ll celebrate together in the future.</p><br>
+                    <p><b>Your Axyyy</b></p>
+                </div>
+
+                <div class="flower-sidebar">
+                    <img src="download__15_-removebg-preview.png" alt="Flowers Bouquet Graphic" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=500&auto=format&fit=crop&q=60';">
+                </div>
+            </div>
+        </div>
+
+        <div id="song-view" class="content-view hidden">
+            <span class="back-arrow" onclick="closeSurprise()">◀</span>
+            <h1 class="cursive-text" style="font-size: 2.8rem;">A Song For You</h1>
+            <div class="music-box">
+                <div class="vinyl-record">
+                    <div class="vinyl-center">
+                        <img src="I Love You Too Much - from _.jpeg" alt="Song Cover" class="cover-art">
+                    </div>
+                </div>
+                <p class="subtext" style="color: #ffccd0; font-weight: 600; padding: 0 10px;">kinda rushed so don`t expect too much hehe</p>
+                <audio id="myAudio" class="audio-player" controls loop>
+                    <source src="a88b425a-e285-427f-a355-63583b211654.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+        </div>
+
+        <div id="gallery-view" class="content-view hidden">
+            <span class="back-arrow" onclick="closeSurprise()">◀</span>
+            <h1 class="cursive-text" style="font-size: 2.6rem;">Our Photo Bucket List</h1>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="aquarium.jpeg" alt="Memory 1">
+                    <div class="photo-caption">Aquarium Date 🐠</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="beach.jpeg" alt="Memory 2">
+                    <div class="photo-caption">Beach Sunset 🌊</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="cat.jpeg" alt="Memory 3">
+                    <div class="photo-caption">Cat Cafe 🐈</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="cook.jpeg" alt="Memory 4">
+                    <div class="photo-caption">Cooking Together 🍳</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="movie.jpeg" alt="Memory 5">
+                    <div class="photo-caption">Late Night Movie 🍿</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="nightwalk.jpeg" alt="Memory 6">
+                    <div class="photo-caption">Night Walks 🌙</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="picnic.jpeg" alt="Memory 7">
+                    <div class="photo-caption">Sunny Picnic 🧺</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="sleep.jpeg" alt="Memory 8">
+                    <div class="photo-caption">Sleepy Cuddles 💤</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="trip.jpeg" alt="Memory 9">
+                    <div class="photo-caption">Road Trip 🚗</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const TARGET_PASSWORD = "0326"; 
+        let inputSequence = "";
+
+        const displayEl = document.getElementById("screen-display");
+        const mainMessageEl = document.getElementById("main-message");
+        const subMessageEl = document.getElementById("sub-message");
+        const mascotEl = document.getElementById("mascot");
+        const wrongMascotEl = document.getElementById("wrong-mascot");
+        const tryAgainBtnEl = document.getElementById("try-again-btn");
+        const audioTrack = document.getElementById("myAudio");
+
+        function appendNumber(digit) {
+            if (inputSequence.length < 8) {
+                inputSequence += digit;
+                displayEl.textContent = inputSequence;
+            }
+        }
+
+        function clearScreen() {
+            inputSequence = "";
+            displayEl.textContent = "";
+        }
+
+        function validatePassword() {
+            if (inputSequence === TARGET_PASSWORD) {
+                document.getElementById("lock-screen").classList.add("hidden");
+                document.getElementById("success-screen").classList.remove("hidden");
+            } else {
+                displayEl.textContent = "✕✕✕✕";
+                mainMessageEl.textContent = "Wrong password! Are you sure you're my love?";
+                mainMessageEl.style.color = "#ff6b76";
+                subMessageEl.textContent = "";
+                
+                // Hide default mascot, show the wrong password GIF
+                mascotEl.classList.add("hidden");
+                wrongMascotEl.classList.remove("hidden");
+                
+                tryAgainBtnEl.classList.remove("hidden");
+                inputSequence = "";
+            }
+        }
+
+        function resetApp() {
+            inputSequence = "";
+            displayEl.textContent = "";
+            mainMessageEl.textContent = "Only for you, My love!";
+            mainMessageEl.style.color = "#ffb3b9";
+            subMessageEl.textContent = "Enter our anniversary date";
+            
+            // Show default mascot again, hide wrong password GIF
+            mascotEl.classList.remove("hidden");
+            wrongMascotEl.classList.add("hidden");
+            
+            tryAgainBtnEl.classList.add("hidden");
+        }
+
+        function openSurprise(viewId) {
+            document.getElementById("dashboard-hub").classList.add("hidden");
+            document.getElementById(viewId).classList.remove("hidden");
+            if(viewId === 'song-view') {
+                audioTrack.play();
+            }
+        }
+
+        function closeSurprise() {
+            const views = ['letter-view', 'song-view', 'gallery-view'];
+            views.forEach(v => document.getElementById(v).classList.add("hidden"));
+            document.getElementById("dashboard-hub").classList.remove("hidden");
+            audioTrack.pause();
+        }
+    </script>
+</body>
+</html>
